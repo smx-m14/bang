@@ -14,7 +14,7 @@
         }
 
         body:before {
-            content:"";
+            content: "";
             background-image: url(star.svg);
             position: fixed;
             top: 0;
@@ -25,7 +25,7 @@
         }
 
         main:before {
-            content:"";
+            content: "";
             background-image: url(star.svg);
             position: fixed;
             top: 10px;
@@ -36,7 +36,7 @@
         }
 
         main:after {
-            content:"";
+            content: "";
             background-image: url(star.svg);
             position: fixed;
             top: 10px;
@@ -47,7 +47,7 @@
         }
 
         body:after {
-            content:"";
+            content: "";
             background-image: url(star.svg);
             position: fixed;
             bottom: 0;
@@ -108,6 +108,15 @@
             cursor: pointer;
             transition: 0.2s;
             appearance: none;
+            /* Estándar moderno */
+            -webkit-appearance: none;
+            /* Safari / iOS */
+            -moz-appearance: none;
+            /* Firefox */
+        }
+
+        select::-ms-expand {
+            display: none;
         }
 
         select:hover {
@@ -203,7 +212,7 @@
     </main>
 
     <script>
-       const cartes = {
+        const cartes = {
             "💃🪩💃": {
                 frase: "Si al final del joc el teu regal vols canviar, una cançó de Bang! hauràs de ballar",
                 explicacio: "Per canviar el regal, balla una cançó al final del joc."
