@@ -1,0 +1,2 @@
+# bang
+Scratch and Bang!
