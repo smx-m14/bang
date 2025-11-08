@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bang!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Montserrat:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+        }
+
+        body:before {
+            content:"";
+            background-image: url(star.svg);
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 10px;
+            background-size: contain;
+        }
+
+        main:before {
+            content:"";
+            background-image: url(star.svg);
+            position: fixed;
+            top: 10px;
+            left: 0;
+            bottom: 10px;
+            width: 10px;
+            background-size: contain;
+        }
+
+        main:after {
+            content:"";
+            background-image: url(star.svg);
+            position: fixed;
+            top: 10px;
+            right: 0;
+            bottom: 10px;
+            width: 10px;
+            background-size: contain;
+        }
+
+        body:after {
+            content:"";
+            background-image: url(star.svg);
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            height: 10px;
+            background-size: contain;
+        }
+
+        html {
+            border: 10px dotted transparent;
+            margin: 0;
+            padding: 0;
+            height: calc(100% - 20px);
+            width: calc(100% - 20px);
+            display: flex;
+            background: radial-gradient(circle at center, #ff2e63 0%, #99002e 100%);
+
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            color: white;
+            width: 100%;
+        }
+
+
+        main {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(145deg, #b30047, #ff3366);
+            box-shadow: 0 0 25px rgba(255, 200, 230, 0.5);
+            border-radius: 25px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            margin: 5px auto;
+            padding: 10px;
+            border: 5px solid gold;
+        }
+
+        h1 {
+            font-family: 'Luckiest Guy', cursive;
+            color: gold;
+            text-shadow: 2px 2px 0 #a6003a, 4px 4px 10px #000;
+            margin-bottom: 10px;
+            font-size: 4rem;
+            font-weight: normal;
+            line-height: 3rem;
+            ;
+        }
+
+        select {
+            font-size: 2.4rem;
+            margin: 0.3em 0;
+            border-radius: 10px;
+            border: 2px solid gold;
+            background-color: #fffbe6;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        select:hover {
+            transform: scale(1.1);
+        }
+
+        button {
+            background: gold;
+            color: #a6003a;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 10px;
+            transition: 0.2s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button:hover {
+            background: gold;
+            transform: scale(1.05);
+        }
+
+        .result {
+            margin-top: 25px;
+            background: linear-gradient(to bottom right, #fff0c1, #f8d48b);
+            color: #2b0021;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: inset 0 0 10px rgba(255, 220, 150, 0.6);
+            display: none;
+        }
+
+        .frase {
+            font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 8px;
+        }
+
+        .explicacio {
+            color: #660033;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Scratch & Bang!</h1>
+        <p>Tria el resultat de la teva targeta</p>
+
+        <div>
+            <select id="sel1">
+                <option>❓</option>
+                <option>💃</option>
+                <option>🪩</option>
+                <option>💖</option>
+                <option>🔥</option>
+                <option>🙉</option>
+                <option>💀</option>
+                <option>🥠</option>
+            </select>
+            <select id="sel2">
+                <option>❓</option>
+                <option>💃</option>
+                <option>🪩</option>
+                <option>💖</option>
+                <option>🔥</option>
+                <option>🙉</option>
+                <option>💀</option>
+                <option>🥠</option>
+            </select>
+            <select id="sel3">
+                <option>❓</option>
+                <option>💃</option>
+                <option>🪩</option>
+                <option>💖</option>
+                <option>🔥</option>
+                <option>🙉</option>
+                <option>💀</option>
+                <option>🥠</option>
+            </select>
+        </div>
+
+        <button id="show">Comprova el teu premi!</button>
+
+        <div class="result" id="result">
+            <div class="frase" id="frase"></div>
+            <div class="explicacio" id="explicacio"></div>
+        </div>
+    </main>
+
+    <script>
+       const cartes = {
+            "💃🪩💃": {
+                frase: "Si al final del joc el teu regal vols canviar, una cançó de Bang! hauràs de ballar",
+                explicacio: "Per canviar el regal, balla una cançó al final del joc."
+            },
+            "💖🔥💖": {
+                frase: "Si dos regals vols fer canviar, tria dos jugadors i fes-los saltar!",
+                explicacio: "Fes saltar dos jugadors perquè intercanviïn els regals."
+            },
+            "🙉🙉🙉": {
+                frase: "Tapa’t les orelles i fes-te’l estimar, ningú el teu regal et podrà robar!",
+                explicacio: "Tens protecció: ningú pot fer-te canviar el regal."
+            },
+            "🪩🪩🔥": {
+                frase: "Quan la pista es mou res no s’atura, tots els regals giren a la dreta amb ventura!",
+                explicacio: "Tots els jugadors passen el regal a la seva dreta."
+            },
+            "🔥🪩🪩": {
+                frase: "Foc i ball en la mateixa guerra, fes girar tots els regals cap a l’esquerra!",
+                explicacio: "Tots els jugadors passen el regal a la seva esquerra."
+            },
+            "💖💖💖": {
+                frase: "Per canviar el teu regal quan et plagui, fes un piropo a algú, que s’ho cregui!",
+                explicacio: "Pots canviar el teu regal amb qui vulguis... però li has de dir un bon piropo abans!"
+            },
+            "🥠🥠🥠": {
+                frase: "Si el teu número no et fa il·lusió, agafa el regal després del 10, amb devoció!",
+                explicacio: "Si no t’agrada el teu número, treu el regal després del número 10."
+            },
+            "🔥💃🔥": {
+                frase: "Tens una missió plena d’emoció: tira petons a qui obri el regal, amb il·lusió!",
+                explicacio: "Cada cop que algú obri un regal, li has de tirar un petó!"
+            },
+            "💃💃💃": {
+                frase: "Amb art, salero i foc, parla andalús fins al final del joc!",
+                explicacio: "Parla amb accent andalús fins que acabi el joc."
+            },
+            "💖💃💃": {
+                frase: "Si algú et llença un petó volant, atura el joc i canta-li un instant!",
+                explicacio: "Quan algú t’enviï un petó, canta-li un tros de cançó!"
+            },
+            "🙉💖💖": {
+                frase: "Sigues dolça, tendra i amorosa, acaricia la del costat, tota l’estona, ben mimosa!",
+                explicacio: "Has d'acariciar la persona del teu costat durant tot el joc."
+            },
+            "💖🙉🙉": {
+                frase: "Et toca fer l’ullet amb gràcia i passió, tot el joc, sense excepció!",
+                explicacio: "Has de fer l’ullet sovint a tothom (guinyar-li l'ull)."
+            },
+            "💀💀💀": {
+                frase: "Et miren, et fan l’ullet o t’arriba un petó volador? Tapa’t la cara com si fos terror!",
+                explicacio: "Si algú t’envia afecte, actua com si fos una pel·li de por!"
+            },
+            "🪩🪩🪩": {
+                frase: "Amb alegria i molt de glam, aixeca’t i crida ben fort: Visca el Bang!",
+                explicacio: "Només t'has d'aixecar en algun moment i cridar Visca el Bang!"
+            },
+            "🥠💃🥠": {
+                frase: "La Gemma és al Japó fent el seu camí, avui també jugues per ella... no la facis patir!",
+                explicacio: "Com que no ha pogut venir, hauràs de treure 2 números. El seu regal ha de quedar tancat."
+            },
+            "💀🥠💀": {
+                frase: "Has rascat amb emoció i gran fervor, però no hi havia res... només humor!",
+                explicacio: "Aquesta carta no té cap premi ni castig."
+            },
+            "💃💀💖": {
+                frase: "No tens poder ni missió especial, però tens estil... i això és genial!",
+                explicacio: "Aquesta carta no té cap premi ni castig."
+            },
+            "🪩🪩💀": {
+                frase: "Aquesta carta no fa fer res estrany, però el teu somriure val més que un guany!",
+                explicacio: "Aquesta carta no té cap premi ni castig."
+            },
+            "🙉💀🙉": {
+                frase: "Sense poders, però amb encant, ets l’estrella d’aquest instant!",
+                explicacio: "Aquesta carta no té cap premi ni castig."
+            },
+            "💀💃💀": {
+                frase: "Avui no tens cap tasca a complir, només gaudir, riure i aplaudir!",
+                explicacio: "Aquesta carta no té cap premi ni castig."
+            }
+        };
+
+        const s1 = document.getElementById("sel1");
+        const s2 = document.getElementById("sel2");
+        const s3 = document.getElementById("sel3");
+        const fraseDiv = document.getElementById("frase");
+        const explicacioDiv = document.getElementById("explicacio");
+        const resultDiv = document.getElementById("result");
+
+        function mostrarResultat(combo) {
+            const carta = cartes[combo];
+            if (carta) {
+                fraseDiv.textContent = carta.frase;
+                explicacioDiv.textContent = carta.explicacio;
+            } else {
+                fraseDiv.textContent = "No hi ha cap carta per aquesta combinació!";
+                explicacioDiv.textContent = "Prova una altra combinació d’icones.";
+            }
+            resultDiv.style.display = "block";
+        }
+
+        document.getElementById("show").addEventListener("click", () => {
+            const combo = s1.value + s2.value + s3.value;
+            mostrarResultat(combo);
+            history.replaceState(null, "", `${window.location.pathname}?c=${encodeURIComponent(combo)}`);
+        });
+
+        // Llegir ?c=
+        const params = new URLSearchParams(window.location.search);
+        const c = params.get("c");
+        if (c) {
+            const [a, b, d] = [...c];
+            s1.value = a; s2.value = b; s3.value = d;
+            mostrarResultat(c);
+        }
+    </script>
+</body>
+
+</html>
